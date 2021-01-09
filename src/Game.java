@@ -64,7 +64,7 @@ public class Game //Class containing the main game loop, spawning enemies, contr
 			}
 			else if (diff <= 66)
 			{
-				p.playMusic("mediummusic.wav", true);
+				p.clip = p.playMusic("mediummusic.wav", p.clip, true);
 			}
 			else if (diff <= 99)
 			{
@@ -100,6 +100,7 @@ public class Game //Class containing the main game loop, spawning enemies, contr
 			wallIcon = "marbrick";
 			superEnemyIcon = "bobomb";
 		}
+		System.out.println(p.clip);
 		//creating JProgressBar object to show charge for special move
 		JProgressBar specialBar = new JProgressBar();
 		specialBar.setBounds(b.textx+820,b.texty-20, 150, 50);

@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.JLabel;
 
 public class Player //Class for the user-controlled character
@@ -54,10 +55,16 @@ public class Player //Class for the user-controlled character
 			{
 				URL sound = getClass().getResource(audio);
 				AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(sound);
-		        clip = AudioSystem.getClip();
-		        clip.open(audioInputStream);
-		        clip.start();
-		        clip.loop(Clip.LOOP_CONTINUOUSLY);
+		        	clip = AudioSystem.getClip();
+		        	clip.open(audioInputStream);
+		        	System.out.println(clip);
+		        	clip.start();
+				FloatControl gainControl =
+						(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
+				System.out.println(clip);
+
+		        	clip.loop(Clip.LOOP_CONTINUOUSLY);
 			}
 			catch (Exception e)
 			{
@@ -68,6 +75,37 @@ public class Player //Class for the user-controlled character
 		{
 			clip.stop();
 		}
+	}
+	public Clip playMusic (String audio, Clip cl, boolean setting) //setting boolean determines whether music is to be started or stopped
+	{
+		if (setting)
+		{
+			try
+			{
+				URL sound = getClass().getResource(audio);
+				AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(sound);
+				cl = AudioSystem.getClip();
+				cl.open(audioInputStream);
+				System.out.println(cl);
+				System.out.println(clip);
+				cl.start();
+				FloatControl gainControl =
+						(FloatControl) cl.getControl(FloatControl.Type.MASTER_GAIN);
+				gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
+				System.out.println(cl);
+
+				cl.loop(Clip.LOOP_CONTINUOUSLY);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			cl.stop();
+		}
+		return cl;
 	}
 	/** Playing sound effects
 	 *  @param audio filename for the audio file
